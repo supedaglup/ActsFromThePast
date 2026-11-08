@@ -29,8 +29,12 @@ public class MusicPatches
     {
         private static readonly PropertyInfo StateProperty =
             typeof(RunManager).GetProperty("State", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo CombatStateField =
-            typeof(CombatManager).GetField("_state", BindingFlags.NonPublic | BindingFlags.Instance);
+        // Game v0.111 removed CombatManager._state; DebugOnlyGetState() is the public way to read it now.
+        private static CombatState? GetCombatState(CombatManager manager)
+        {
+            try { return manager.DebugOnlyGetState(); }
+            catch { return null; }
+        }
 
         private enum TrackType
         {
@@ -107,8 +111,34 @@ public class MusicPatches
             "beyond_boss"
         };
 
-        private const string BaseGameBankPath = "res://banks/desktop/act1_a1.bank";
-        private const string BaseGameTrack = "event:/music/act1_a1_v1";
+        // Base-game music used for shops and rest sites, matched to the Slay the Spire 1 act.
+        private static (string Bank, string Track) GetBaseGameMusic() => GetCurrentLegacyAct() switch
+        {
+            LegacyAct.City => ("res://banks/desktop/act2_a1.bank", "event:/music/act2_a1_v2"),
+            LegacyAct.Beyond => ("res://banks/desktop/act3_a1.bank", "event:/music/act3_a1_v1"),
+            _ => ("res://banks/desktop/act1_a1.bank", "event:/music/act1_a1_v1"),
+        };
+
+        private static readonly MethodInfo? LoadActBankMethod =
+            AccessTools.Method(typeof(NRunMusicController), "LoadActBank", new[] { typeof(string), typeof(string) });
+
+        private static bool _baseGameMusicPending = false;
+
+        /// <summary>Loads a base-game music bank the same way the game does (with its retry logic).</summary>
+        private static bool LoadBaseGameBank(NRunMusicController controller, Node proxy, string bank, string track)
+        {
+            try
+            {
+                if (LoadActBankMethod != null)
+                    return LoadActBankMethod.Invoke(controller, new object[] { bank, track }) is true;
+            }
+            catch (Exception e)
+            {
+                Log.Warn($"[ActsFromThePast] LoadActBank failed, trying the audio proxy directly: {e.Message}");
+            }
+            // Fallback: call the audio proxy's GDScript method directly (name/arguments as of game v0.111).
+            return proxy.Call("load_act_bank", bank, track).AsBool();
+        }
 
         private static LegacyAct GetCurrentLegacyAct()
         {
@@ -166,14 +196,25 @@ public class MusicPatches
             var proxy = GetProxy(controller);
             if (proxy == null) return;
 
-            var tree = Engine.GetMainLoop() as SceneTree;
-            tree?.CreateTimer(fadeDelay).Connect("timeout", Callable.From(() =>
+            if (_baseGameMusicPending) return;
+            _baseGameMusicPending = true;
+            var (bank, track) = GetBaseGameMusic();
+
+            void Begin()
             {
-                proxy.Call("load_act_banks", new Godot.Collections.Array { BaseGameBankPath });
-                proxy.Call("update_music", BaseGameTrack);
-                proxy.Call("update_global_parameter", "Progress", progress);
+                _baseGameMusicPending = false;
+                // The player may have left the shop / rest site during the fade.
+                if (!IsLegacyAct() || !GetSpecialRoomProgress().HasValue) return;
+                if (!LoadBaseGameBank(controller, proxy, bank, track))
+                    Log.Warn($"[ActsFromThePast] Could not load {bank} for shop/rest site music.");
+                proxy.Call("update_music", track);
+                proxy.Call("update_global_parameter", "Progress", GetSpecialRoomProgress() ?? progress);
                 _isPlayingBaseGameMusic = true;
-            }));
+            }
+
+            var tree = Engine.GetMainLoop() as SceneTree;
+            if (tree == null || fadeDelay <= 0f) { Begin(); return; }
+            tree.CreateTimer(fadeDelay).Connect("timeout", Callable.From(Begin));
         }
 
         private static void StopBaseGameMusic(NRunMusicController controller)
@@ -199,7 +240,7 @@ public class MusicPatches
         {
             var combatManager = CombatManager.Instance;
             if (combatManager == null) return false;
-            var combatState = CombatStateField?.GetValue(combatManager) as CombatState;
+            var combatState = GetCombatState(combatManager);
             if (combatState == null) return false;
             foreach (var creature in combatState.Enemies ?? Enumerable.Empty<Creature>())
             {
@@ -385,6 +426,11 @@ public static bool UpdateTrack_Prefix(NRunMusicController __instance)
         {
             var proxy = GetProxy(__instance);
             proxy?.Call("update_global_parameter", "Progress", specialProgress.Value);
+        }
+        else
+        {
+            // Nothing was playing when we arrived (e.g. the music was stopped during the room change).
+            StartBaseGameMusic(__instance, specialProgress.Value, 0.5f);
         }
         return false;
     }
@@ -657,7 +703,7 @@ public static bool UpdateTrack_Prefix(NRunMusicController __instance)
     [HarmonyPatch(typeof(Hook), nameof(Hook.AfterCombatEnd))]
     public static class AfterCombatEndPatch
     {
-        public static void Postfix(IRunState runState, CombatState? combatState, CombatRoom room)
+        public static void Postfix(IRunState runState, ICombatState? combatState, CombatRoom room)
         {
             
             // Putting Mind Bloom logic here since I don't want to patch the same hook twice in multiple classes

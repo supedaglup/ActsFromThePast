@@ -180,7 +180,8 @@ public static class TheBoxGreenPricePatch
         return AccessTools.GetTypesFromAssembly(typeof(NMerchantSlot).Assembly)
             .Where(t => t.IsSubclassOf(typeof(NMerchantSlot)) && !t.IsAbstract)
             .Select(t => AccessTools.Method(t, "UpdateVisual"))
-            .Where(m => m != null);
+            .Where(m => m != null)
+            .Distinct(); // the slot types share one UpdateVisual; patch it once
     }
     public static void Postfix(object __instance, MegaLabel ____costLabel)
     {
