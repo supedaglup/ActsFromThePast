@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Relics;
+using ActsFromThePast.Relics;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -55,7 +55,7 @@ public sealed class Necronomicurse : CustomCardModel
         await CardPileCmd.Add(this, PileType.Hand);
     }
     
-    public override void AfterTransformedTo()
+    public override void AfterThisWasTransformedFrom(CardModel card)
     {
         AFTPModAudio.Play("relics", "necronomicon");
     }

@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -30,6 +30,7 @@ public sealed class ConstrictedPower : CustomPowerModel
     public override async Task AfterDeath(
         PlayerChoiceContext choiceContext,
         Creature creature,
+        CardModel? source,
         bool wasRemovalPrevented,
         float deathAnimLength)
     {

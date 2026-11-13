@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Enemies;
+using ActsFromThePast.Acts.TheBeyond.Enemies;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -27,7 +27,7 @@ public sealed class LifeLinkPower : CustomPowerModel
             return;
 
         GetInternalData<Data>().isReviving = false;
-        NCombatRoom.Instance?.SetCreatureIsInteractable(Owner, true);
+        NCombatRoom.Instance?.GetCreatureNode(Owner)?.SetIsInteractable(true, true);
         await CreatureCmd.TriggerAnim(Owner, "Revive", 0.0f);
         await CreatureCmd.Heal(Owner, Amount);
     }
@@ -35,6 +35,7 @@ public sealed class LifeLinkPower : CustomPowerModel
     public override async Task AfterDeath(
         PlayerChoiceContext choiceContext,
         Creature creature,
+        CardModel? source,
         bool wasRemovalPrevented,
         float deathAnimLength)
     {
@@ -46,7 +47,7 @@ public sealed class LifeLinkPower : CustomPowerModel
             if (creature.Monster is Darkling darkling)
                 Owner.Monster.SetMoveImmediate(darkling.DeadState);
             await CreatureCmd.TriggerAnim(Owner, "Dead", 0.0f);
-            NCombatRoom.Instance?.SetCreatureIsInteractable(Owner, false);
+            NCombatRoom.Instance?.GetCreatureNode(Owner)?.SetIsInteractable(false, true);
         }
         else
         {

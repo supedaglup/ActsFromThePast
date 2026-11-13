@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Cards;
+using ActsFromThePast.Cards;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -70,7 +70,7 @@ public sealed class BigFish : CustomEventModel
     private async Task Box()
     {
         await CardPileCmd.AddCurseToDeck<Regret>(Owner);
-        var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
         await RelicCmd.Obtain(relic, Owner);
         SetEventFinished(PageDescription("BOX"));
     }

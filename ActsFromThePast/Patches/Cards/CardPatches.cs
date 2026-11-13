@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using ActsFromThePast.Cards;
 using Godot;
 using HarmonyLib;
@@ -114,7 +114,7 @@ public static class TheBoxFreePurchasePatch
     }
 }
 
-[HarmonyPatch(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseWrapper))]
+[HarmonyPatch(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseUnsynchronized))]
 public static class TheBoxIgnoreCostPatch
 {
     public static void Prefix(ref bool ignoreCost, Player ____player)

@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Enchantments;
+using ActsFromThePast.Enchantments;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -81,8 +81,7 @@ public sealed class CouncilOfGhosts : CustomEventModel
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars.HpLoss.BaseValue,
-            false);
+            DynamicVars.HpLoss.BaseValue, null);
 
         var apparitionResults = new List<CardPileAddResult>();
         for (var i = 0; i < ApparitionCount; i++)

@@ -1,4 +1,4 @@
-﻿
+
 
 using System.Reflection;
 using ActsFromThePast.Acts.TheBeyond;
@@ -15,7 +15,8 @@ using MegaCrit.Sts2.Core.Runs;
 
 namespace ActsFromThePast.Patches.Ancients;
 
-[HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms))]
+[HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms),
+    typeof(MegaCrit.Sts2.Core.Random.Rng), typeof(MegaCrit.Sts2.Core.Unlocks.UnlockState), typeof(bool), typeof(bool))] // v0.113: the 4-arg overload does the work (a new 1-arg wrapper was added)
 public class DarvPatches
 {
     private static readonly FieldInfo RoomsField = AccessTools.Field(typeof(ActModel), "_rooms");

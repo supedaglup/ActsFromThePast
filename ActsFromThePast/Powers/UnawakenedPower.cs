@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Enemies;
+using ActsFromThePast.Acts.TheBeyond.Enemies;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -22,6 +22,7 @@ public sealed class UnawakenedPower : CustomPowerModel
     public override async Task AfterDeath(
         PlayerChoiceContext choiceContext,
         Creature creature,
+        CardModel? source,
         bool wasRemovalPrevented,
         float deathAnimLength)
     {

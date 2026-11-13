@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Gold;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -98,7 +98,7 @@ public sealed class ScrapOoze : CustomEventModel
 
         if (roll >= threshold)
         {
-            var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+            var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
             await RelicCmd.Obtain(relic, Owner);
             SetEventFinished(PageDescription("SUCCESS"));
         }
@@ -119,7 +119,7 @@ public sealed class ScrapOoze : CustomEventModel
     {
         await PlayerCmd.LoseGold(DynamicVars.Gold.BaseValue, Owner, GoldLossType.Spent);
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/twig_slime_m/twig_slime_m_die");
-        var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
         await RelicCmd.Obtain(relic, Owner);
         SetEventFinished(PageDescription("BLOAT"));
     }

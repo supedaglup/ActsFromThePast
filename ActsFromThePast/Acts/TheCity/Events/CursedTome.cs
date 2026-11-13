@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Relics;
+using ActsFromThePast.Relics;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
@@ -273,7 +273,7 @@ public sealed class CursedTome : CustomEventModel
         if (!Owner.Relics.Any(r => r is NilrysCodex))
             possibleBooks.Add(ModelDb.Relic<NilrysCodex>());
         if (possibleBooks.Count == 0)
-            return RelicFactory.PullNextRelicFromFront(Owner);
+            return RelicFactory.PullNextRelicForRewardFromFront(Owner);
         return Rng.NextItem(possibleBooks);
     }
 }

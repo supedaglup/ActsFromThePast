@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
@@ -68,7 +68,7 @@ public sealed class PleadingVagrant : CustomEventModel
     {
         var cost = ActsFromThePastConfig.RebalancedMode ? GoldCostRebalanced : GoldCost;
         await PlayerCmd.LoseGold(cost, Owner);
-        var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
         await RelicCmd.Obtain(relic, Owner);
         SetEventFinished(PageDescription("PAY_GOLD"));
     }
@@ -78,7 +78,7 @@ public sealed class PleadingVagrant : CustomEventModel
         var shame = Owner.RunState.CreateCard(ModelDb.Card<Shame>(), Owner);
         var curseResult = await CardPileCmd.Add(shame, PileType.Deck);
         CardCmd.PreviewCardPileAdd(curseResult, 2f);
-        var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
         await RelicCmd.Obtain(relic, Owner);
         SetEventFinished(PageDescription("ROB"));
     }

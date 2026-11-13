@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -40,7 +40,7 @@ public sealed class Parasite : CustomCardModel
         if (Owner?.Creature == null)
             return;
 
-        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 3, false);
+        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 3, null);
         AFTPModAudio.Play("general", "blood_swish");
     }
 }

@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Interfaces;
+using ActsFromThePast.Interfaces;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -159,7 +159,7 @@ public sealed class WeMeetAgain : CustomEventModel, IShrineEvent
     {
         await PotionCmd.Discard(potion);
         await RelicCmd.Obtain(
-            RelicFactory.PullNextRelicFromFront(Owner).ToMutable(), Owner);
+            RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable(), Owner);
         SetEventFinished(PageDescription("GIVE_POTION"));
     }
 
@@ -167,7 +167,7 @@ public sealed class WeMeetAgain : CustomEventModel, IShrineEvent
     {
         await PlayerCmd.LoseGold(_goldAmount, Owner, GoldLossType.Spent);
         await RelicCmd.Obtain(
-            RelicFactory.PullNextRelicFromFront(Owner).ToMutable(), Owner);
+            RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable(), Owner);
         SetEventFinished(PageDescription("GIVE_GOLD"));
     }
 
@@ -175,7 +175,7 @@ public sealed class WeMeetAgain : CustomEventModel, IShrineEvent
     {
         await CardPileCmd.RemoveFromDeck(new List<CardModel> { card });
         await RelicCmd.Obtain(
-            RelicFactory.PullNextRelicFromFront(Owner).ToMutable(), Owner);
+            RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable(), Owner);
         SetEventFinished(PageDescription("GIVE_CARD"));
     }
 

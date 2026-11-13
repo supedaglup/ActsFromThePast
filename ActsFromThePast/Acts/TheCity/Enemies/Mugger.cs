@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
@@ -186,7 +186,7 @@ public sealed class Mugger : CustomMonsterModel
             var effect = SmokeBombEffect.Create(creatureNode.VfxSpawnPosition);
             NCombatRoom.Instance.CombatVfxContainer.AddChild(effect);
         }
-        creatureNode?.ToggleIsInteractable(false);
+        creatureNode?.SetIsInteractable(false, true);
         await EscapeAnimation.Play(Creature);
         await CreatureCmd.Escape(Creature);
     }

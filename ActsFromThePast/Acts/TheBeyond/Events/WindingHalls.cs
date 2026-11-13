@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Cards;
+using ActsFromThePast.Cards;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -120,8 +120,7 @@ public sealed class WindingHalls : CustomEventModel
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars["MaxHpLoss"].BaseValue,
-            false);
+            DynamicVars["MaxHpLoss"].BaseValue, null);
         SetEventFinished(PageDescription("RETREAT"));
     }
 }

@@ -1,4 +1,4 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization;
@@ -37,7 +37,7 @@ public static class GremlinLeaderHelper
             TalkCmd.Play(line, gremlin, VfxColor.White, VfxDuration.Short);
 
             var creatureNode = NCombatRoom.Instance?.GetCreatureNode(gremlin);
-            creatureNode?.ToggleIsInteractable(false);
+            creatureNode?.SetIsInteractable(false, true);
 
             await CreatureCmd.Escape(gremlin, removeCreatureNode: false);
 

@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Relics;
+using ActsFromThePast.Relics;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
@@ -81,8 +81,7 @@ public sealed class MoaiHead : CustomEventModel
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars["HpLoss"].BaseValue,
-            false);
+            DynamicVars["HpLoss"].BaseValue, null);
         await CreatureCmd.Heal(Owner.Creature, Owner.Creature.MaxHp);
         SetEventFinished(PageDescription("PRAY"));
     }

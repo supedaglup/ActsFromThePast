@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Interfaces;
+using ActsFromThePast.Interfaces;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -57,8 +57,7 @@ public sealed class Purifier : CustomEventModel, IShrineEvent
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars["HpLoss"].BaseValue,
-            false);
+            DynamicVars["HpLoss"].BaseValue, null);
 
         var prefs = new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, 2);
         await CardPileCmd.RemoveFromDeck(

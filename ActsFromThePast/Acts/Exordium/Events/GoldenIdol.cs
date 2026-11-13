@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Relics;
+using ActsFromThePast.Relics;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -158,8 +158,7 @@ public sealed class GoldenIdol : CustomEventModel
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars["MaxHpLoss"].BaseValue,
-            false);
+            DynamicVars["MaxHpLoss"].BaseValue, null);
         SetEventFinished(PageDescription("CRAWL"));
     }
 

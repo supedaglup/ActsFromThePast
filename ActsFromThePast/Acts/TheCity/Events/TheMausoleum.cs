@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Audio.Debug;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -76,7 +76,7 @@ public sealed class TheMausoleum : CustomEventModel
     {
         NDebugAudioManager.Instance.Play("blunt_attack.mp3");
         NGame.Instance?.ScreenShake(ShakeStrength.Weak, ShakeDuration.Long);
-        var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
         await RelicCmd.Obtain(relic, Owner);
         var writhe = Owner.RunState.CreateCard(ModelDb.Card<Writhe>(), Owner);
         var curseResult = await CardPileCmd.Add(writhe, PileType.Deck);

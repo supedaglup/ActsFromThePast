@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Events;
+using ActsFromThePast.Acts.TheBeyond.Events;
 using ActsFromThePast.Patches.Audio;
 using ActsFromThePast.Patches.Cards;
 using BaseLib.Abstracts;
@@ -418,10 +418,11 @@ private void PlayExhaustSfx()
     public override async Task AfterDeath(
         PlayerChoiceContext choiceContext,
         Creature creature,
+        CardModel? source,
         bool wasRemovalPrevented,
         float deathAnimLength)
     {
-        await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
+        await base.AfterDeath(choiceContext, creature, source, wasRemovalPrevented, deathAnimLength);
 
         if (creature != Creature)
             return;

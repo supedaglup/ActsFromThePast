@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Cards;
+using ActsFromThePast.Cards;
 using ActsFromThePast.Relics;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
@@ -82,8 +82,7 @@ public sealed class Vampires : CustomEventModel
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            maxHpLoss,
-            false);
+            maxHpLoss, null);
         await ReplaceStrikesWithBites();
         SetEventFinished(PageDescription("ACCEPT"));
     }

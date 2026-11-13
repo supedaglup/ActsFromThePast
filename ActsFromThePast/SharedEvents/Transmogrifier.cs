@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,8 +67,7 @@ public sealed class Transmogrifier : CustomEventModel, IShrineEvent
         await CreatureCmd.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            KneelMaxHpLoss,
-            false);
+            KneelMaxHpLoss, null);
 
         var cards = Owner.Deck.Cards
             .Where(c => c.Type != CardType.Quest && c.IsTransformable)

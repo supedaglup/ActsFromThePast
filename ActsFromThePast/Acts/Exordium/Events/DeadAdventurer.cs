@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Patches.RoomEvents;
+using ActsFromThePast.Patches.RoomEvents;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
@@ -136,7 +136,7 @@ public sealed class DeadAdventurer : CustomEventModel
                     rewards.Add(new GoldReward(GoldReward, GoldReward, Owner));
                     break;
                 case RewardType.Relic:
-                    var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+                    var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
                     rewards.Add(new RelicReward(relic, Owner));
                     break;
             }
@@ -167,7 +167,7 @@ public sealed class DeadAdventurer : CustomEventModel
             case RewardType.Nothing:
                 break;
             case RewardType.Relic:
-                var relic = RelicFactory.PullNextRelicFromFront(Owner).ToMutable();
+                var relic = RelicFactory.PullNextRelicForRewardFromFront(Owner).ToMutable();
                 await RelicCmd.Obtain(relic, Owner);
                 break;
         }

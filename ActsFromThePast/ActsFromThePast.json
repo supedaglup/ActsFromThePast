@@ -3,12 +3,12 @@
   "name": "Acts from the Past",
   "author": "Cany0udance",
   "description": "Exordium, The City, and The Beyond from Slay the Spire 1 return as alternate acts!",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    { "id": "BaseLib", "min_version": "v3.4.7" }
+    { "id": "BaseLib", "min_version": "v3.4.8" }
   ],
   "affects_gameplay": true,
-  "min_game_version": "0.111.0"
+  "min_game_version": "0.113.0"
 }

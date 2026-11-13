@@ -1,4 +1,4 @@
-﻿
+
 using System.Reflection;
 using System.Reflection.Emit;
 using ActsFromThePast.Relics;
@@ -164,8 +164,8 @@ public static class NlothsGiftCardFactoryPatch
     }
 }
 
-[HarmonyPatch(typeof(CardRarityOdds), nameof(CardRarityOdds.RollWithoutChangingFutureOdds), 
-    typeof(CardRarityOddsType), typeof(float))]
+[HarmonyPatch(typeof(CardRarityOdds), nameof(CardRarityOdds.RollWithoutChangingFutureOdds),
+    typeof(CardRarityOddsType), typeof(float), typeof(MegaCrit.Sts2.Core.Random.Rng))] // v0.113 added an rngOverride parameter
 public static class NlothsGiftRarityPatch
 {
     [HarmonyTranspiler]

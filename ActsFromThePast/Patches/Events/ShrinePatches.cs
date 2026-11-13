@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using ActsFromThePast.Acts;
 using ActsFromThePast.Acts.TheBeyond;
 using ActsFromThePast.Acts.TheCity;
@@ -18,7 +18,8 @@ namespace ActsFromThePast.Patches.Events;
 
 public class ShrinePatches
 {
-    [HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms))]
+    [HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms),
+        typeof(MegaCrit.Sts2.Core.Random.Rng), typeof(MegaCrit.Sts2.Core.Unlocks.UnlockState), typeof(bool), typeof(bool))] // v0.113: the 4-arg overload does the work (a new 1-arg wrapper was added)
 [HarmonyPriority(Priority.Low)]
 public static class EventPoolPatch
 {

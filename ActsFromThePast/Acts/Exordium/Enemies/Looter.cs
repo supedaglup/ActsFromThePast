@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -200,7 +200,7 @@ public sealed class Looter : CustomMonsterModel
             var effect = SmokeBombEffect.Create(creatureNode.VfxSpawnPosition);
             NCombatRoom.Instance.CombatVfxContainer.AddChild(effect);
         }
-        creatureNode?.ToggleIsInteractable(false);
+        creatureNode?.SetIsInteractable(false, true);
 
         await EscapeAnimation.Play(Creature);
         await CreatureCmd.Escape(Creature);
