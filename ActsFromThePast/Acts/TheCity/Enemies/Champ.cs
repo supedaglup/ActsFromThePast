@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Powers;
+using ActsFromThePast.Powers;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -23,8 +23,8 @@ namespace ActsFromThePast;
 
 public sealed class Champ : CustomMonsterModel
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 440, 420);
-    public override int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 440, 420);
+    public override int MinInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 440, 420));
+    public override int MaxInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 440, 420));
 
     private int SlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
     private int ExecuteDamage => 10;

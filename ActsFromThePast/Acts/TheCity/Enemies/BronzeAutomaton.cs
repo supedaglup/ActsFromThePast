@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Combat;
@@ -22,8 +22,8 @@ namespace ActsFromThePast;
 
 public sealed class BronzeAutomaton : CustomMonsterModel
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 320, 300);
-    public override int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 320, 300);
+    public override int MinInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 320, 300));
+    public override int MaxInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 320, 300));
 
     private int FlailDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 7);
     private int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 50, 45);

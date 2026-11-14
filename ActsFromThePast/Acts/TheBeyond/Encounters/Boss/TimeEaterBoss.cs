@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Enemies;
+using ActsFromThePast.Acts.TheBeyond.Enemies;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
@@ -16,6 +16,9 @@ public sealed class TimeEaterBoss : CustomEncounterModel
     }
     
     public override bool IsValidForAct(ActModel act) => act is TheBeyondAct;
+
+    /// <summary>Dread Mode: the effect this boss spreads to every other fight in its act.</summary>
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel? GetDominion() => ModelDb.Dominion<ActsFromThePast.Dread.AftpTimeEaterDominion>();
     public override string BossNodePath => "res://ActsFromThePast/map_boss_icons/time_eater";
     public override IEnumerable<MonsterModel> AllPossibleMonsters
     {

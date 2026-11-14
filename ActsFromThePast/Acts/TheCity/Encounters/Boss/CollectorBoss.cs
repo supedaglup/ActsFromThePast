@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheCity;
+using ActsFromThePast.Acts.TheCity;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Encounters;
 using MegaCrit.Sts2.Core.Models;
@@ -13,6 +13,9 @@ public sealed class CollectorBoss : CustomEncounterModel
     }
 
     public override bool IsValidForAct(ActModel act) => act is TheCityAct;
+
+    /// <summary>Dread Mode: the effect this boss spreads to every other fight in its act.</summary>
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel? GetDominion() => ModelDb.Dominion<ActsFromThePast.Dread.AftpCollectorDominion>();
     
     public override string BossNodePath => "res://ActsFromThePast/map_boss_icons/collector";
     public override bool HasScene => true;

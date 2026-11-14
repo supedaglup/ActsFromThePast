@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Interfaces;
+using ActsFromThePast.Interfaces;
 using ActsFromThePast.Minigames;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -42,7 +42,10 @@ public sealed class SecretPortal : CustomEventModel, IShrineEvent
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
-        if (ActsFromThePastConfig.RebalancedMode)
+        // Blitz moves the party along its own fixed map and stops working if the map is replaced, so in Blitz the
+        // portal always uses the classic "go straight to the boss" behaviour instead of rebuilding the map.
+        var isBlitz = Owner.RunState is RunState runState && runState.GameMode == GameMode.Blitz;
+        if (ActsFromThePastConfig.RebalancedMode && !isBlitz)
         {
             return new[]
             {

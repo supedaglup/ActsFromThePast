@@ -7,7 +7,7 @@ scaling options the base mod lacks.
 
 | | |
 |---|---|
-| **Acts From The Past version** | 1.0.8 |
+| **Acts From The Past version** | 1.0.9 |
 | **Config Sub-Mod version** | 1.1.0 |
 | **Slay the Spire 2** | v0.113.0 (beta branch) |
 | **Requires** | [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) 3.4.8 or newer |
@@ -16,6 +16,29 @@ All credit for the acts, enemies, events, art and audio goes to Cany0udance and 
 fork only changes code so it keeps working (and the sub-mod is new work on top).
 
 ## What's new in this fork
+
+### 1.0.9: Dread and Blitz modes
+**Dread:** each Slay the Spire 1 boss now has its own *dominion*, the effect that a Dread boss spreads to every other
+fight in its act (shown on the boss icon at the top of the screen). They are themed on the boss and sized like the
+base game's dominions for the same act:
+
+| Act | Boss | Dominion |
+|---|---|---|
+| Exordium | Slime Boss | Each combat, shuffle 2 **Slimed** into your draw pile |
+| Exordium | Hexaghost | Each combat, shuffle 2 **Burns** into your draw pile |
+| Exordium | The Guardian | Enemies have 2 **Thorns** |
+| The City | The Collector | Each combat, start with 2 **Weak**, 2 **Vulnerable** and 2 **Frail** |
+| The City | The Champ | Enemies have 2 **Strength** |
+| The City | Bronze Automaton | Enemies have 2 **Artifact** |
+| The Beyond | Awakened One | Enemies have 2 **Curiosity** (gain 2 Strength whenever you play a Power) |
+| The Beyond | Time Eater | The toughest enemy in each combat has **Time Warp** |
+| The Beyond | Donu and Deca | Enemies have 1 **Strength** and 4 **Plating** |
+
+Like the base game's bosses, the Slay the Spire 1 bosses are also tougher in Dread: +10% max HP.
+
+**Blitz:** the acts, enemies and events work with Blitz's shorter map. Two fixes: the Secret Portal (Rebalanced Mode)
+no longer replaces the map in Blitz, which would have stopped Blitz from moving you along it (it teleports you to the
+boss instead), and The Box's free purchase now also works in Blitz shops.
 
 ### 1.0.8: Slay the Spire 2 v0.113.0 (beta)
 The November 12 beta patch (The Fool, Blitz and Dread) renamed or reshaped a lot of game code. Fixed:

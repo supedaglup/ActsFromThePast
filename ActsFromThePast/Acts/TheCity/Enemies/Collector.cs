@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheCity;
+using ActsFromThePast.Acts.TheCity;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;
@@ -25,8 +25,8 @@ namespace ActsFromThePast;
 
 public sealed class Collector : CustomMonsterModel
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 300, 282);
-    public override int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 300, 282);
+    public override int MinInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 300, 282));
+    public override int MaxInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 300, 282));
 
     private int FireballDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 21, 18);
     private int StrengthAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 5, 4);

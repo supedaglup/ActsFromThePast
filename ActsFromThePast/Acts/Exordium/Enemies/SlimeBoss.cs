@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Powers;
+using ActsFromThePast.Powers;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;
@@ -28,8 +28,8 @@ namespace ActsFromThePast;
 
 public sealed class SlimeBoss : CustomMonsterModel
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 150, 140);
-    public override int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 150, 140);
+    public override int MinInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 150, 140));
+    public override int MaxInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 150, 140));
     
     private int SlamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 38, 35);
     private int SlimedCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 5, 3);

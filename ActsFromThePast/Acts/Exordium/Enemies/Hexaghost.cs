@@ -34,8 +34,8 @@ public sealed class Hexaghost : CustomMonsterModel
 {
     // HACK: Hexaghost scene includes a hidden DummySpine node because 
 // Sprite2D-only scenes fail to load from the mod folder for unknown reasons.
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 264, 250);
-    public override int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 264, 250);
+    public override int MinInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 264, 250));
+    public override int MaxInitialHp => ActsFromThePast.Dread.LegacyDread.BossHp(AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 264, 250));
 
     private const int SearDamage = 6;
     private int InfernoDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 3, 2);

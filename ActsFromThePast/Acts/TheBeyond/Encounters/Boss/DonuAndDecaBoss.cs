@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Enemies;
+using ActsFromThePast.Acts.TheBeyond.Enemies;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
@@ -12,6 +12,9 @@ public sealed class DonuAndDecaBoss : CustomEncounterModel
     }
     
     public override bool IsValidForAct(ActModel act) => act is TheBeyondAct;
+
+    /// <summary>Dread Mode: the effect this boss spreads to every other fight in its act.</summary>
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel? GetDominion() => ModelDb.Dominion<ActsFromThePast.Dread.AftpDonuAndDecaDominion>();
     public override string BossNodePath => "res://ActsFromThePast/map_boss_icons/donu_and_deca";
 
     public override IEnumerable<MonsterModel> AllPossibleMonsters => new MonsterModel[]

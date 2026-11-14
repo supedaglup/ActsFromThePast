@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ActsFromThePast.Acts;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
@@ -14,6 +14,9 @@ public sealed class SlimeBossBoss : CustomEncounterModel
     }
 
     public override bool IsValidForAct(ActModel act) => act is ExordiumAct;
+
+    /// <summary>Dread Mode: the effect this boss spreads to every other fight in its act.</summary>
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel? GetDominion() => ModelDb.Dominion<ActsFromThePast.Dread.AftpSlimeBossDominion>();
 
     public override string BossNodePath => "res://ActsFromThePast/map_boss_icons/slime_boss";
 

@@ -1,4 +1,4 @@
-﻿using ActsFromThePast.Acts.TheBeyond.Enemies;
+using ActsFromThePast.Acts.TheBeyond.Enemies;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
@@ -12,6 +12,9 @@ public sealed class AwakenedOneBoss : CustomEncounterModel
     }
     
     public override bool IsValidForAct(ActModel act) => act is TheBeyondAct;
+
+    /// <summary>Dread Mode: the effect this boss spreads to every other fight in its act.</summary>
+    public override MegaCrit.Sts2.Core.Models.Dread.DominionModel? GetDominion() => ModelDb.Dominion<ActsFromThePast.Dread.AftpAwakenedOneDominion>();
     public override string BossNodePath => "res://ActsFromThePast/map_boss_icons/awakened_one";
     public override bool HasScene => true;
     public override IReadOnlyList<string> Slots => new[] { "cultist_left", "cultist_right", "awakened" };

@@ -113,6 +113,16 @@ public static class TheBoxFreePurchasePatch
             __result = 0;
     }
 }
+// Blitz shop entries compute their own price, so The Box needs the same patch there.
+[HarmonyPatch(typeof(BlitzMerchantEntry), nameof(BlitzMerchantEntry.Cost), MethodType.Getter)]
+public static class TheBoxFreePurchaseBlitzPatch
+{
+    public static void Postfix(ref int __result, Player ____player)
+    {
+        if (TheBoxTracker.FreeNextPurchasePlayer == ____player)
+            __result = 0;
+    }
+}
 
 [HarmonyPatch(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseUnsynchronized))]
 public static class TheBoxIgnoreCostPatch
