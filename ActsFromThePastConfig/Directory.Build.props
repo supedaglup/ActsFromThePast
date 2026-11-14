@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!-- Normally nothing needs changing here: the game is found automatically through Steam.
+         Only if the build says it cannot find Slay the Spire 2, remove the "<!- -" and "- ->" around the line below
+         and put in your own game folder (the folder that contains the "mods" folder). Use forward slashes. -->
+    <!-- <Sts2Path>D:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path> -->
+
+    <!-- Only if the build says it cannot find BaseLib.dll, point directly at the file: -->
+    <!-- <BaseLibDll>C:/Program Files (x86)/Steam/steamapps/workshop/content/2868840/3737335127/BaseLib/BaseLib.dll</BaseLibDll> -->
+  </PropertyGroup>
+</Project>

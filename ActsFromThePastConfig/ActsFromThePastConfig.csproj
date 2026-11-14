@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CheckDependencyPaths">
+
+  <!-- Finds your Slay the Spire 2 install automatically (Steam registry / default paths).
+       If it cannot be found, edit Directory.Build.props and set <Sts2Path> there. -->
+  <Import Project="Sts2PathDiscovery.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ActsFromThePastConfig</RootNamespace>
+    <AssemblyName>ActsFromThePastConfig</AssemblyName>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- Mods should be platform-neutral (MSIL); silence the architecture-mismatch warning. -->
+    <NoWarn>$(NoWarn);MSB3270;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Game + library assemblies are taken straight from your install, so the API always matches your game version.
+       Nothing is downloaded during the build. -->
+  <ItemGroup Condition="Exists('$(Sts2DataDir)')">
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GodotSharp">
+      <HintPath>$(Sts2DataDir)/GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Locate BaseLib.dll: Steam Workshop subscription first, then a manual copy in the mods folder.
+       (Done inside a target because wildcard lookups are only resolved at build time.) -->
+  <Target Name="LocateBaseLib" BeforeTargets="ResolveAssemblyReferences;CoreCompile">
+    <ItemGroup Condition="'$(BaseLibDll)' == ''">
+      <_BaseLibCandidate Include="$(SteamLibraryPath)/workshop/content/2868840/3737335127/**/BaseLib.dll" />
+      <_BaseLibCandidate Include="$(ModsPath)**/BaseLib.dll" />
+    </ItemGroup>
+    <PropertyGroup Condition="'$(BaseLibDll)' == '' and '@(_BaseLibCandidate)' != ''">
+      <BaseLibDll>%(_BaseLibCandidate.FullPath)</BaseLibDll>
+    </PropertyGroup>
+    <Error Condition="'$(BaseLibDll)' == '' or !Exists('$(BaseLibDll)')"
+           Text="BaseLib.dll was not found. Subscribe to BaseLib on the Steam Workshop (and let Steam finish downloading it), or copy BaseLib.dll into 'Slay the Spire 2/mods/BaseLib/'. You can also set &lt;BaseLibDll&gt; in Directory.Build.props." />
+    <Message Importance="high" Text="Using BaseLib from: $(BaseLibDll)" />
+    <ItemGroup>
+      <Reference Include="BaseLib">
+        <HintPath>$(BaseLibDll)</HintPath>
+        <Private>false</Private>
+      </Reference>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <None Include="ActsFromThePastConfig.json" />
+    <None Include="README.md" />
+  </ItemGroup>
+
+  <Target Name="CheckDependencyPaths">
+    <Error Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')"
+           Text="Slay the Spire 2 was not found at '$(Sts2DataDir)'. Open Directory.Build.props and set &lt;Sts2Path&gt; to your 'Slay the Spire 2' folder (the one that contains the 'mods' folder)." />
+    <Error Condition="Exists('$(Sts2DataDir)') and !Exists('$(Sts2DataDir)/sts2.dll')"
+           Text="sts2.dll was not found inside '$(Sts2DataDir)'. Make sure the game is fully installed." />
+    <Message Importance="high" Text="Using game files from: $(Sts2DataDir)" />
+  </Target>
+
+  <!-- After a successful build, drop the mod straight into the game's mods folder. -->
+  <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent" Condition="'$(ModsPath)' != ''">
+    <PropertyGroup>
+      <ModOutputDir>$(ModsPath)ActsFromThePastConfig/</ModOutputDir>
+    </PropertyGroup>
+    <Message Importance="high" Text="Copying ActsFromThePastConfig.dll and ActsFromThePastConfig.json to $(ModOutputDir)" />
+    <MakeDir Directories="$(ModOutputDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModOutputDir)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/ActsFromThePastConfig.json" DestinationFolder="$(ModOutputDir)" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModOutputDir)" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+  </Target>
+
+</Project>

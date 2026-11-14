@@ -1,0 +1,15 @@
+{
+  "id": "ActsFromThePastConfig",
+  "name": "Acts from the Past: Config Sub-Mod",
+  "author": "supedaglup",
+  "description": "Extra configuration for Acts from the Past: per-player-count sliders for enemy HP, damage, block and buff scaling (host settings are synced in co-op), plus a fix that plays the regular Slay the Spire 2 shop music in the Slay the Spire 1 acts.",
+  "version": "1.1.0",
+  "has_pck": false,
+  "has_dll": true,
+  "dependencies": [
+    { "id": "BaseLib", "min_version": "3.4.8" },
+    { "id": "ActsFromThePast", "min_version": "1.0.8" }
+  ],
+  "affects_gameplay": true,
+  "min_game_version": "0.113.0"
+}
